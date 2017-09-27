@@ -1,0 +1,11 @@
+@import 'ember-paper';
+
+body.ember-application,
+body>div.ember-view {
+  flex: 1;
+  display: flex;
+}
+
+.cell {
+  display: inline-block;
+}
