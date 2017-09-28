@@ -9,17 +9,21 @@ export default Ember.Service.extend({
     if (get(game, 'playerId')) {
       get(this, 'paperToaster').show('Another player joined.');
     } else {
-      game.join(data.playerId);
+      game.join(data);
     }
   },
 
   playerLeft(game) {
     get(this, 'paperToaster').show('Your opponent has left the game.');
-    game.setStatus('WAIT');
+    game.end();
   },
 
   gameStart(game, data) {
     get(this, 'paperToaster').show('Game starts!');
-    game.start(data.players);
+    game.start(data);
+  },
+
+  takeStep(game, data) {
+    game.takeStep(data);
   }
 });

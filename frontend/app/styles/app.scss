@@ -4,8 +4,20 @@ body.ember-application,
 body>div.ember-view {
   flex: 1;
   display: flex;
+  background-color: color($warn, '200');
 }
 
-.cell {
-  display: inline-block;
+.board {
+  border-collapse: collapse;
+
+  .cell {
+    display: inline-block;
+    border: 1px solid;
+    font-size: 80px;
+    height: 150px;
+    line-height: 150px;
+    cursor: pointer;
+    text-align: center;
+    width: 150px;
+  }
 }

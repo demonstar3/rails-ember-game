@@ -1,13 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { set, get } = Ember;
-
-const statusMap = {
-  'WAIT': 'Wait for another player to join',
-  'YOUR_TURN': 'Your turn',
-  'OPPONENT_TURN': 'Wait for opponent to take action'
-};
+const { set, get, copy } = Ember;
 
 export default DS.Model.extend({
   gameId: DS.attr('string'),
@@ -17,24 +11,32 @@ export default DS.Model.extend({
   players: DS.attr(),
   board: DS.attr(),
 
-  join(playerId) {
+  join({ playerId }) {
     set(this, 'playerId', playerId)
-    this.setStatus('WAIT');
+    set(this, 'status', 'WAIT');
   },
 
-  start(players) {
+  start({ players, currentPlayer }) {
     set(this, 'players', players);
     set(this, 'board', [Array(3), Array(3), Array(3)]);
-    this.setCurrentPlayer(players[0]);
+    this.setCurrentPlayer(currentPlayer);
+  },
+
+  takeStep({ r, c, value, nextPlayer }) {
+    const board = copy(get(this, 'board'), true);
+    board[r][c] = value;
+    set(this, 'board', board);
+
+    this.setCurrentPlayer(nextPlayer);
+  },
+
+  end() {
+    set(this, 'status', 'WAIT');
   },
 
   setCurrentPlayer(currentPlayer) {
     const isYourTurn = get(this, 'playerId') === currentPlayer;
     set(this, 'currentPlayer', currentPlayer);
-    this.setStatus(isYourTurn ? 'YOUR_TURN' : 'OPPONENT_TURN');
-  },
-
-  setStatus(statusCode) {
-    set(this, 'status', statusMap[statusCode]);
+    set(this, 'status', isYourTurn ? 'YOUR_TURN' : 'OPPONENT_TURN');
   }
 });

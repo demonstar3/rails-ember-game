@@ -1,10 +1,10 @@
-<table>
+<table class="board">
   <tbody>
-    {{#each board as |row|}}
+    {{#each board as |row rIndex|}}
       <tr class="row">
-        {{#each row as |cell|}}
-          <td class="cell">
-            X
+        {{#each row as |cell cIndex|}}
+          <td class="cell" onclick={{action "onClickBoard" rIndex cIndex}}>
+            {{cell}}
           </td>
         {{/each}}
       </tr>
