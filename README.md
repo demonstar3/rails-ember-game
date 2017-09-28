@@ -1,24 +1,11 @@
-# README
+# tic-tac-toe
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple multiple player tic-tac-toe game based on Ember.js and Rails 5 using Action Cable
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+1. bundle install
+2. rails ember:install
+3. rails s
+4. Enjoy the game :)
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
