@@ -1,11 +1,15 @@
 import Ember from 'ember';
 
-const { get, set, inject } = Ember;
+const { get, set, inject, computed } = Ember;
 
 export default Ember.Controller.extend({
   cable: inject.service(),
   eventConsumer: inject.service(),
   paperToaster: inject.service(),
+
+  shareLink: computed(function() {
+    return location.href;
+  }),
 
   setupCable() {
     const model = get(this, 'model');
@@ -41,6 +45,22 @@ export default Ember.Controller.extend({
       }
 
       get(this, 'subscription').perform('take_step', { r: rowIndex, c: colIndex })
+    },
+
+    onClickAction() {
+      const status = get(this, 'model.status');
+
+      if (status === 'WAIT') {
+        set(this, 'showDialog', true);
+      } else if (status === 'START') {
+        get(this, 'subscription').perform('withdraw');
+      } else if (status === 'END') {
+        get(this, 'subscription').perform('join');
+      }
+    },
+
+    closeDialog() {
+      set(this, 'showDialog', false);
     }
   }
 });

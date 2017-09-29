@@ -19,4 +19,14 @@ class GameChannel < ApplicationCable::Channel
     game = GameManager.find_game(params[:game_id])
     game.take_step(uuid, data)
   end
+
+  def withdraw
+    game = GameManager.find_game(params[:game_id])
+    game.withdraw(uuid)
+  end
+
+  def join
+    game = GameManager.find_game(params[:game_id])
+    game.join(uuid)
+  end
 end

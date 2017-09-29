@@ -4,7 +4,7 @@ body.ember-application,
 body>div.ember-view {
   flex: 1;
   display: flex;
-  background-color: color($warn, '200');
+  // background-color: color($warn, '200');
 }
 
 .board {

@@ -8,11 +8,16 @@ export default DS.Model.extend({
   status: DS.attr('string'),
   playerId: DS.attr('string'),
   currentPlayer: DS.attr('string'),
+  winner: DS.attr('string'),
   players: DS.attr(),
   board: DS.attr(),
 
   join({ playerId }) {
     set(this, 'playerId', playerId)
+    set(this, 'status', 'WAIT');
+  },
+
+  left() {
     set(this, 'status', 'WAIT');
   },
 
@@ -30,13 +35,13 @@ export default DS.Model.extend({
     this.setCurrentPlayer(nextPlayer);
   },
 
-  end() {
-    set(this, 'status', 'WAIT');
+  end({ winner }) {
+    set(this, 'winner', winner);
+    set(this, 'status', 'END');
   },
 
   setCurrentPlayer(currentPlayer) {
-    const isYourTurn = get(this, 'playerId') === currentPlayer;
     set(this, 'currentPlayer', currentPlayer);
-    set(this, 'status', isYourTurn ? 'YOUR_TURN' : 'OPPONENT_TURN');
+    set(this, 'status', 'START');
   }
 });

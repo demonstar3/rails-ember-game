@@ -1,6 +1,6 @@
 <div class="layout-column flex">
-  <div class="flex-20 layout layout-align-center">
-    <h1>{{status-message model.status}}</h1>
+  <div class="flex-20">
+    {{game-header game=model onClickAction=(action "onClickAction")}}
   </div>
   <div class="flex-80 layout layout-align-center">
     {{game-board
@@ -9,3 +9,25 @@
     }}
   </div>
 </div>
+
+{{#if showDialog}}
+  {{#paper-dialog class="flex" onClose=(action "closeDialog" "cancel") clickOutsideToClose=true}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        <h2>Share Link</h2>
+        <span class="flex"></span>
+        {{#paper-button iconButton=true onClick=(action "closeDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
+    {{#paper-dialog-content}}
+      {{paper-input class="layout" label="Link" type="text" value=shareLink disabled=true onChange=null}}
+    {{/paper-dialog-content}}
+
+    {{#paper-dialog-actions class="layout-row"}}
+      <span class="flex"></span>
+      {{#paper-button onClick=(action "closeDialog" "cancel")}}Close{{/paper-button}}
+      {{#copy-button class="md-default-theme md-button" clipboardText=shareLink success=(action "closeDialog" "ok")}}Copy to Clipboard{{/copy-button}}
+    {{/paper-dialog-actions}}
+  {{/paper-dialog}}
+{{/if}}
